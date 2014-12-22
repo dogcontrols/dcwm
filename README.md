@@ -111,73 +111,87 @@ Currently, there are three custom event types which are all related to drag and 
 
 ##### **drag**
 Event members:
-**type** - "drag".
-**dragId** - the id of the object being dragged.
-**dragObject** - the jQuery element being dragged.
-**dragClone** - the clone of the dragObject that follows the mouse.
-**offset** - the offset (with left and top members) applied to the dragClone. 
-**funcCleanup** - allows you to specify a function to run when the dragging completes.
+
+Name | Description
+--- | ---
+**type** | "drag".
+**dragId** | the id of the object being dragged.
+**dragObject** | the jQuery element being dragged.
+**dragClone** | the clone of the dragObject that follows the mouse.
+**offset** | the offset (with left and top members) applied to the dragClone.
+**funcCleanup** | allows you to specify a function to run when the dragging completes.
 
 ##### **dragover**
 Event members:
-**type** - "dragover"
-**dragId** - the id of the object being dragged.
-**dragObject** - the jQuery element being dragged.
-**dragClone** - the clone of the dragObject that follows the mouse.
-**offset** - the offset (with left and top members) applied to the dragClone. 
-**overId** - the id of the `drop-target` the mouse is over, else the topmost element.
-**over** - the jQuery element of the `drop-target` the mouse is over, else the topmost element.
-**enter** - boolean that is true the first time the mouse moves over an element.
-**leave** - when *enter* is true, the jQuery element of the previous element dragged over, else undefined.
+
+Name | Description
+--- | ---
+**type** | "dragover"
+**dragId** | the id of the object being dragged.
+**dragObject** | the jQuery element being dragged.
+**dragClone** | the clone of the dragObject that follows the mouse.
+**offset** | the offset (with left and top members) applied to the dragClone. 
+**overId** | the id of the `drop-target` the mouse is over, else the topmost element.
+**over** | the jQuery element of the `drop-target` the mouse is over, else the topmost element.
+**enter** | boolean that is true the first time the mouse moves over an element.
+**leave** | when *enter* is true, the jQuery element of the previous element dragged over, else undefined.
 
 ##### **drop**
 Event members:
-**type** - "drop"
-**dragId** - the id of the object being dragged.
-**dragObject** - the jQuery element being dragged.
-**dropId** - the id of the element dropped on.
-**dropTarget** - the jQuery element dropped on.
+
+Name | Description
+--- | ---
+**type** | "drop"
+**dragId** | the id of the object being dragged.
+**dragObject** | the jQuery element being dragged.
+**dropId** | the id of the element dropped on.
+**dropTarget** | the jQuery element dropped on.
 
 
 ### Variables
 
-**WM.mx, WM.my** - Globally available mouse X and Y coordinates.
-**WM.limitWindowsToView = true** - Can be set to false to disable modification of window positions during browser resize.
-**WM.maxMenuLevels = 3** - See level-# class above for usage.
-**WM.zStartWindow = 100**
-**WM.zStartMenu = 200**
-**WM.zStartClone = 297**
-**WM.zStartTooltip = 300**
-**WM.zStartMax = 400**
+
+Name | Default | Description
+--- | --- | ---
+**WM.mx, WM.my** | | Globally available mouse X and Y coordinates.
+**WM.limitWindowsToView** | true | Can be set to false to disable modification of window positions during browser resize.
+**WM.maxMenuLevels** | 3 | See level-# class above for usage.
+**WM.zStartWindow** | 100 | 
+**WM.zStartMenu** | 200 |
+**WM.zStartClone** | 297 |
+**WM.zStartTooltip** | 300 |
+**WM.zStartMax** | 400 |
 
 ### Functions
 
 Unless otherwise noted, function parameters named `e` or `w` accept jQuery objects, ids, or DOM elements. `e` means any element can be used, where `w` indicates a window-type element is expected.
 
-**WM.registerContainer(container)** - initializes WM with the id of a container.
-**WM.listen(f)** - sets the event listener. see Event Handling above.
-**WM.getTopmost()** - finds the topmost window. visible tooltips will always be returned first, then menus, then windows.
-**WM.closeTopmostWindow()**
-**WM.closeMenus()**
-**WM.isWindow(e)**
-**WM.isMenu(e)**
-**WM.isTooltip(e)**
-**WM.isAnyWindowType(e)**
-**WM.isInput(e)**
-**WM.closeSubMenus(w)**
-**WM.getFixedZ(w)** - returns a z-index number for windows with always-on-top or always-on-bottom classes, otherwise undefined.
-**WM.resetZIndexes(container)** - initializes z-index values of all window elements in the container.
-**WM.bringToFront(w)**
-**WM.showWindow(w, keepZ)** - keepZ=true will not bring the window to front when it is shown.
-**WM.hideWindow(w)**
-**WM.toggleWindow(w)**
-**WM.beginMouseDown(e)** - e is the mousedown MouseEvent. Any mousedown handler that cancels bubbling must call this method to ensure windows are shown and hidden properly.
-**WM.findDropTarget(x, y)** - searches the DOM at the client coordinates for the best matching drop target element.
-**WM.isDragging()**
-**WM.calcBoundedWindowPos(w, left, top)**
-**WM.moveWindow(w, x, y)** - sets the window's X and Y coordinates. x and y depend on `position` CSS of window.
-**WM.limitWindowToBounds(w)**
-**WM.limitAllWindowsToBounds()**
-**WM.moveWindowBounded(w, x, y)** - sets the window's X and Y coordinates and ensures the window will appear within the browser viewport. x and y depend on `position` CSS of window.
-**WM.getLayout()**
-**WM.restoreLayout(layout, updateVisibility)**
+Name | Description
+--- | ---
+**WM.registerContainer(container)** | initializes WM with the id of a container.
+**WM.listen(f)** | sets the event listener. see Event Handling above.
+**WM.getTopmost()** | finds the topmost window. visible tooltips will always be returned first, then menus, then windows.
+**WM.closeTopmostWindow()** |
+**WM.closeMenus()** |
+**WM.isWindow(e)** |
+**WM.isMenu(e)** |
+**WM.isTooltip(e)** |
+**WM.isAnyWindowType(e)** |
+**WM.isInput(e)** |
+**WM.closeSubMenus(w)** |
+**WM.getFixedZ(w)** | returns a z-index number for windows with always-on-top or always-on-bottom classes, otherwise undefined.
+**WM.resetZIndexes(container)** | initializes z-index values of all window elements in the container.
+**WM.bringToFront(w)** |
+**WM.showWindow(w, keepZ)** | keepZ=true will not bring the window to front when it is shown.
+**WM.hideWindow(w)** |
+**WM.toggleWindow(w)** |
+**WM.beginMouseDown(e)** | e is the mousedown MouseEvent. Any mousedown handler that cancels bubbling must call this method to ensure windows are shown and hidden properly.
+**WM.findDropTarget(x, y)** | searches the DOM at the client coordinates for the best matching drop target element.
+**WM.isDragging()** |
+**WM.calcBoundedWindowPos(w, left, top)** |
+**WM.moveWindow(w, x, y)** | sets the window's X and Y coordinates. x and y depend on `position` CSS of window.
+**WM.limitWindowToBounds(w)** |
+**WM.limitAllWindowsToBounds()** |
+**WM.moveWindowBounded(w, x, y)** | sets the window's X and Y coordinates and ensures the window will appear within the browser viewport. x and y depend on `position` CSS of window.
+**WM.getLayout()** |
+**WM.restoreLayout(layout, updateVisibility)** |
