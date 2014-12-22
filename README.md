@@ -3,6 +3,10 @@
 
 DCWM provides a set of window manager behaviors which you can use to turn your own HTML into an overlapping window system. The behaviors are applied via CSS classes and the behavior can be further refined by using the provided JavaScript API or regular DOM or CSS manipulators.
 
+Live demo: [examples/helloworld.html](http://htmlpreview.github.io/?https://github.com/dogcontrols/dcwm/blob/master/examples/helloworld.html)
+
+Live demo: [examples/everything.html](http://htmlpreview.github.io/?https://github.com/dogcontrols/dcwm/blob/master/examples/everything.html)
+
 DCWM is not a UI framework. Instead, it implements the aspects of a window manager mainly related to handling movable and overlapping windows. For example, when you think of a menu, you probably think of a vertical list of items with mouseover highlighting which then closes when you click an item. What DCWM does is take care of the boilerplate describing how the menu interacts with the windows around it. DCWM will make sure that your menus are on top of other windows, and will close the menus when you click outside of them. What is displayed in the menu and what happens when you click inside it is entirely up to you to control.
 
 DCWM requires jQuery 2.x, and was tested in the latest Chrome, IE and FF on Windows.
