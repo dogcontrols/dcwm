@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>demo</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="../src/wm.js"></script>
+
+    <style>
+        html, body {background-color:#5080a0;cursor:default; font-family:Calibri, Arial, Helvetica, sans-serif; overflow:hidden;margin:0;padding:0; }
+        input {background-color:#211;color:#cbb;}
+        .window {padding:2px; position:absolute; color:#a99; background-color:#433; border:1px solid black; border-radius:2px; box-shadow: 1px 1px 10px #000; }
+        .tooltip {padding:2px; position:absolute; color:#a99; background-color:#433; border:1px solid black; border-radius:2px; box-shadow: 1px 1px 10px #000; }
+        .menu {padding:2px; position:absolute; color:#a99; background-color:#433; border:1px solid black; border-radius:2px; box-shadow: 1px 1px 10px #000; }
+        .move-window {text-align:center; background-color:#544}
+        .client-area { background-color:#655; color:#caa}
+        .clear {clear:both;}
+    </style>
+    </head>
+<body>
+    <br>
+
+    <div id="window-container">
+        <div id="win1" class="window" style="top:120px; left:20px; width:300px">
+            <div>
+                <div class="close-window" style="float:right"><b>X</b></div>
+                <div class="move-window" onselectstart="return true;"><b>window</b></div>
+            </div>
+            <div class="clear"></div>
+            <br>
+            <span style="border:1px solid white; margin:10px"
+                  onmouseover="WM.showWindow('win-popup1')"
+                  onmouseout="WM.hideWindow('win-popup1')"
+                  onmousemove="WM.moveWindowBounded('win-popup1', WM.mx + 10, WM.my + 16 );">
+                mouseover to show a <b>tooltip</b>
+            </span>
+            <br>
+            <br>
+
+            <span id="showMenu" style="border:1px solid white; margin:10px"
+                onclick="showWindowAtCursor('menu1')">
+                click to show a <b>menu</b>
+            </span><br>
+
+            <div class="move-window" style="border:1px solid white; margin:10px">
+                <b>move-window</b> makes the first <b>window</b> above it in the DOM moveable
+                <div class="client-area" style="border:1px solid red; margin:10px">
+                    <b>client-area</b> blocks mouse events
+                </div><br>
+            </div>
+        </div>
+
+        <div id="menu1" class="menu level-0" style="display:none">
+            example<br>menu<br>behavior<hr>
+            <div onmousedown="showWindowAtCursor('menu2')">
+                show submenu...
+            </div>
+        </div>
+    
+        <div id="menu2" class="menu level-1" style="display:none; color:lime">
+            example<br>submenu<br>behavior<hr>
+            <div onmousedown="showWindowAtCursor('menu3')">
+                show submenu...
+            </div>
+        </div>
+        
+        <div id="menu3" class="menu level-2" style="display:none; color:yellow">
+            example<br>submenu<br>behavior
+        </div>
+
+
+        <div id="win2" class="window" style="top:80px; left:750px;">
+            <div>
+                <div class="close-window" style="float:right"><b>X</b></div>
+                <div class="move-window" onselectstart="return true;">window 2</div>
+            </div>
+            clicking another window will give it focus and move it above other windows.<br><br>
+            by default, window are restricted to the bounds of the browser viewport.<br><br>
+            this window does not have a fixed width so it will resize when dragged to the edge of the screen.<br><br>
+            display:inline-block can be used for fixed width flow layouts.<br>
+            
+            <div style="border:1px solid white; margin:10px">
+                input field:
+                <input /><br>
+                - clicking outside of the input will remove its focus (blur).<br>
+                - tabbing note: allowing default tabbing can cause the focus to go
+                  into the url bar and it can be difficult to reset the focus.
+                  as a workaround, handle tab/shift+tab with js and explicitly focus the previous or next input.
+            </div>
+        </div>
+    
+        <div id="win3" class="window move-window" style="top:80px; left:345px; width:380px; text-align:left">
+            <div style="border:1px solid red; margin:10px" class="close-window">
+                <b>close-window</b> hides the window
+            </div>
+        
+            <div style="border:1px solid white; margin:10px">
+                drag and drop:<br>
+                make an element draggable with <b>drag-object</b>.<br>
+                make an element a drop target with <b>drop-target</b>. drops will hit drop-target instead of its child elements.<br>
+                implement <b>WM.listen(function(e, next) {...});</b> to handle drop notifcations.<br>
+                when an object is dragged, a clone of the dragged element is added to BODY with the <b>drag-clone</b> class.
+            </div>
+
+            <div style="margin:10px">
+                <div id="left" class="drag-object" style="display:inline-block; width:100px; height:70px; border:1px solid yellow; color:#a99; background-color:#333">
+                    id=left<br>
+                    <b>drag-object</b>
+                </div>
+                <div id="drop" class="drop-target client-area" style="display:inline-block; width:100px; height:70px; border:1px solid #5f5; color:#a99; background-color:#333">
+                    id=drop<br>
+                    <b>drop-target</b>
+                </div>
+                <div id="right" class="drop-target drag-object" style="display:inline-block; vertical-align:top; width:100px; height:70px; border:1px solid yellow; color:#a99; background-color:#333">
+                    id=right<br>
+                    <b>drop-target</b> &amp;<br>
+                    <b>drag-object</b>
+                </div>
+            </div>
+            <div id="dropInfo" style="border:1px solid white; margin:10px; white-space:pre">
+
+            </div>
+        </div>
+    
+        <div id="win4" class="window move-window" style="top:20px; left:390px;">
+            windows are ordered using z-index, and are also grouped by window type.<br>
+            window types are ordered from back to front: window, menu, drag-clone, tooltip.
+        </div>
+
+        <div id="win5" class="window move-window always-on-bottom" style="top:350px; left:20px;">
+            always-on-bottom
+        </div>
+        
+        <div id="win6" class="window move-window always-on-top" style="top:380px; left:20px;">
+            always-on-top
+        </div>
+
+        <div id="win-popup1" style="display:none" class="tooltip move-window">
+            <div class="item-gold"><b>tooltip</b></div>
+            tooltip windows have a higher z-index
+        </div>
+    </div>
+    <div style="color:#dfd">
+    Keys:<br>
+        ESC - hide topmost window<br>
+        1,2,3,4,5,6,7 - toggle windows 1 - 7
+
+        <div id="somediv" style="border:1px solid white; position:absolute; top:100%; margin-top:-30px; ">
+            drop-target, but not a window
+        </div>
+
+    </div>
+
+<script>
+    var showWindowAtCursor = function(w) {
+        w = $("#" + w);
+        w.css({ left: WM.mx, top: WM.my });
+        WM.showWindow(w);
+    };
+
+    $(window).on("keydown", function(e) {
+        // Tab
+        if (e.which === 9) {
+            e.preventDefault();
+            return false;
+        }
+
+        // Pass events to inputs, except tab keys.
+        if (WM.isInput($(e.target)))
+            return;
+
+        // Escape
+        if (e.which === 27) {
+            WM.closeTopmostWindow();
+            return;
+        }
+
+        // Toggle windows
+        var char = String.fromCharCode(e.which);
+        if (!char) return;
+        if (char == '1')
+            WM.toggleWindow($("#win1"));
+        else if (char == '2')
+            WM.toggleWindow($("#win2"));
+        else if (char == '3')
+            WM.toggleWindow($("#win3"));
+        else if (char == '4')
+            WM.toggleWindow($("#win4"));
+        else if (char == '5')
+            WM.toggleWindow($("#win5"));
+        else if (char == '6')
+            WM.toggleWindow($("#win6"));
+        else if (char == '7')
+            WM.toggleWindow($("#win-popup1"));
+    });
+
+    var overmsg, leavemsg;
+    WM.listen(function(e, next) {
+
+        switch (e.type) {
+        case "drag":
+            overmsg = leavemsg = "";
+            $("#dropInfo").html("type: " + e.type + "<br>dragId: " + e.dragId + "<br>&nbsp;");
+            e.dragObject.css({ opacity: 0.2 });
+            e.funcCleanup = function() { e.dragObject.css({ opacity: 1.0 }); };
+            break;
+
+        case "drop":
+            $("#dropInfo").html("type: " + e.type + "<br>dragId: " + e.dragId + "<br>dropId: " + e.dropId);
+            break;
+
+        case "dragover":
+
+            if (e.enter) overmsg = e.overId || "&lt;"+e.over[0].tagName+"&gt;";
+            if (e.leave) leavemsg = e.leave[0].id || "&lt;"+e.leave[0].tagName+"&gt;";
+            $("#dropInfo").html(
+                "dragging...<br>" +
+                "drag enter: " + overmsg + "<br>" +
+                "drag leave: " + leavemsg
+            );
+            break;
+        }
+
+        // run the default event handler
+        return next(e);
+    });
+
+    WM.registerContainer("window-container");
+
+    // prevent select and contextmenu for entire document.
+    $(window).on("mousedown", function() { return false; });
+    $(window).on("contextmenu", function() { return false; });
+</script>
+</body>
+</html>
