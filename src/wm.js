@@ -1,3 +1,6 @@
+/**
+ ** DCWM - https://github.com/dogcontrols/dcwm 
+ **/
 var WM;
 (function() {
     "use strict";
